@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SDON Controller</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 50px;
+        }
+        select, button {
+            padding: 6px;
+            margin: 5px;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Software Defined Optical Network Controller</h2>
+
+    <form method="POST">
+
+        Source:
+        <select name="source">
+            <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option>
+        </select>
+
+        Destination:
+        <select name="destination">
+            <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option>
+        </select>
+
+        <br><br>
+
+        Failure Link:
+        <select name="fail_u">
+            <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option>
+        </select>
+
+        <select name="fail_v">
+            <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option>
+        </select>
+
+        <br><br>
+
+        <button type="submit">Compute Route</button>
+    </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if path %}
+        <h3>Original Path: {{ path }} (Cost: {{ cost }})</h3>
+        <h3>After Failure: {{ new_path }}
+            {% if new_cost %}
+                (Cost: {{ new_cost }})
+            {% endif %}
+        </h3>
+    {% endif %}
+
+    {% if new_path %}
+    <h3>Network Visualization:</h3>
+    <img src="/static/graph.png" width="400">
+    {% endif %}
+
+</body>
+</html>
